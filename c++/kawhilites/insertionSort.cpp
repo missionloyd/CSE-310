@@ -25,6 +25,7 @@ void insertionsort(int arr[], int n)
 			cout << endl;
 			i = i - 1;
 		}
+		cout << "Element wise comparison: " << endl << arr[i] << " > " << key << endl;
 		cout << "array at index " << i + 1 << " overwritten with " << key << endl;
 		arr[i + 1] = key;
 		cout << "current array: ";
