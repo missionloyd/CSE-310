@@ -98,9 +98,9 @@ def quickSort(array, low, high):
 
 # print the array every time it is overwritten 
 def increment(array):
-    global activationCount
-    print("#" + str(activationCount) +  " " + str(array))
-    activationCount+=1
+    global count
+    count+=1
+    print("#" + str(count) +  " " + str(array))
     
 
 # Print the array
@@ -109,8 +109,8 @@ def printList(array):
         print(array[i], end=" ")
     print()
 
-# global variable to count activated records
-activationCount = 1
+# gloabl variable to count array updates
+count = 0
 
 # Driver program
 if __name__ == '__main__':
@@ -125,8 +125,6 @@ if __name__ == '__main__':
             break
         else:
             option=""
-
-    print("\n")
     
     if(option=="i"):
         insertionSort(array)
@@ -136,8 +134,3 @@ if __name__ == '__main__':
         quickSort(array, 0, size - 1)
     elif(option=="Q"):
         exit(1)
-
-    print("\n#Times Activated " + str(activationCount) + "\n")
-
-
-
