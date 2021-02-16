@@ -17,16 +17,15 @@ to left of pivot and all greater elements to right
 of pivot */
 int partition(int arr[], int low, int high)
 {
-	cout << "partition activation" << endl;
+	cout << "partition(arr[], "<< low << ", " << high << ") activation" << endl;
 	int pivot = arr[high]; // pivot 
 	int i = (low - 1); // Index of smaller element 
 
 	for (int j = low; j <= high - 1; j++)
 	{
-		cout << "Element-wise comparison:" << endl;
-		cout << j << "<=" << high << endl;
 		// If current element is smaller than the pivot 
-		if (arr[j] < pivot)
+		cout << "Element-wise comparison: " << arr[j] << " <= " << pivot << endl;
+		if (arr[j] <= pivot)
 		{
 			i++; // increment index of smaller element
 			cout << "Swapped arr[" << i << "] = " << arr[i] << " and arr[" << j << "] = " << arr[j] << endl;
@@ -44,7 +43,7 @@ low --> Starting index,
 high --> Ending index */
 void quickSort(int arr[], int low, int high)
 {
-	cout << "quicksort activation" << endl;
+	cout << "quicksort(arr[], " << low << ", " << high << ") activation" << endl;
 	if (low < high)
 	{
 		/* pi is partitioning index, arr[p] is now
@@ -78,4 +77,3 @@ int main()
 	return 0;
 }
 
-// This code is contributed by rathbhupendra 
