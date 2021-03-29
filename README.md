@@ -3,7 +3,7 @@
 - Pasta: DisjointSets, Heaps (Driver), MaxHeap, MinHeap (Java)
 
 ## Exam1 Algorithms
-InsertionSort, MergeSort, and QuickSort
+- InsertionSort, MergeSort, and QuickSort (C++ & Python)
 
 ## Run C++
 ```c++
