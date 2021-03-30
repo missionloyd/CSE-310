@@ -110,6 +110,7 @@
 		
 		function dfs_visit(u){
 					time++;
+					u.dsc = time;
 					u.color = gray;
 					
 					for(i in u.adj) {
