@@ -189,7 +189,6 @@ int main()
 
     int size=sizeof(arr)/sizeof(arr[0]);
     MaxHeap h(20, arr, size);
-    h.insertKey(29);
 
     //************************************************************************
     //Enter commands here
