@@ -116,6 +116,7 @@
 					for(i in u.adj) {
 								var v = sigma.instances(0).graph.nodes().find(x => x.id == u.adj[i]);
 								if(v.color == white) {
+											v.pi = u.id;
 											dfs_visit(v);
 										}
 							}
