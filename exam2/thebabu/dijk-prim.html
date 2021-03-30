@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>God help me pt 3: the reckoning</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/sigma.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.renderers.edgeLabels.min.js"></script>
+		<script src="sigma.plugins.dragNodes.js"></script>
+	</head>
+	
+	<body>
+		<p id="sort-p">U CAN SHIFT NODES AROUND</p>
+		<div id="container">
+			<style>
+				#graph-container {
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					position: absolute;
+				}
+			</style>
+			<div id="graph-container"></div>
+		</div>
+	</body>
+	
+	<script>
+		var i,
+			s,
+			N = 5,
+			E = 6,
+			g = { nodes: [], edges: [] };
+		
+		var white = "#eee";
+		var gray  = "#666";
+		var black = "#000";
+		
+		//**MODIFY THIS**
+		var THEGRAPH = [
+			{ id: "S", adj: [{t: "T", d: 10}] },
+			{ id: "T", adj: ["C", "E", "F"] },
+			{ id: "X", adj: ["D", "G"] },
+			{ id: "Y", adj: ["C", "G", "H"] },
+			{ id: "Z", adj: ["A", "F"] }
+		];
+		
+		//Add nodes and edges
+		var k = 0;
+		for(i = 0; i < THEGRAPH.length; i++) {
+			g.nodes.push({
+				id: THEGRAPH[i].id,
+				label: THEGRAPH[i].id,
+				adj: THEGRAPH[i].adj,
+				x: Math.random(),
+				y: Math.random(),
+				size: 10,
+				color: white,
+				fin: null,
+			});
+			
+			for(j = 0; j < THEGRAPH[i].adj.length; j++) {
+					g.edges.push({
+						id: "E" + k,
+						source: THEGRAPH[i].id,
+						target: THEGRAPH[i].adj[j],
+						size: 10,
+						color: "#ccc",
+						type: 'arrow'
+					});
+					k++;
+				}
+			}
+		
+		// Instantiate sigma:
+		s = new sigma({
+					graph: g,
+					container: 'graph-container',
+					renderer: {
+								container: document.getElementById('graph-container'),
+								type: 'canvas',
+							},
+					settings: {
+								minNodeSize: 8,
+								maxNodeSize: 20,
+								maxEdgeSize: 10,
+								doubleClickEnabled: false,
+								arrowSizeRatio: 5,
+							}
+				});
+		
+		//Listeners
+		var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
+		
+		//Algorithms
+		
+	</script>
+</html>

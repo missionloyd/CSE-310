@@ -10,7 +10,7 @@
 	</head>
 	
 	<body>
-		<p id="sort-p">U CAN SHIFT NODES AROUND</p>
+		<p id="sort-p">U CAN SHIFT NODES AROUND (INITIAL DFS WAS DONE IN ALPHABETAL ORDER, SO IT MIGHT DIFFER BUT I DONT THINK IT MATTERS LMAO)</p>
 		<div id="container">
 			<style>
 				#graph-container {
@@ -162,6 +162,12 @@
 							color_index++;
 						}
 					}
+						
+					var v = sigma.instances(0).graph.nodes();
+					for(i in v) {
+						 v[i].label = v[i].label + " (" + v[i].dsc + " / " + v[i].fin + ") pi = " + v[i].pi;
+					}
+					sigma.instances(0).refresh();
 			}
 		
 		function trajuns_helper(u_string, g) {
