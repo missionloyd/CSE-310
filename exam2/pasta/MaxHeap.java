@@ -63,13 +63,18 @@ public class MaxHeap {
     }
 
     public void increaseKey(int i, int key) {
-        if (key < A[i] && A[i] != 0) {
-            System.out.println("Error: new key is smaller than current key");
-        }
-        A[i] = key;
-        while (i > 1 & A[getParent(i)] < A[i]) {
-            swap(i, getParent(i));
-            i = getParent(i);
+        if (!(i > size)){
+            if (key < A[i] && A[i] != 0) {
+                System.out.println("Error: new key is smaller than current key");
+            } else {
+                A[i] = key;
+                while (i > 1 && A[getParent(i)] < A[i]) {
+                    swap(i, getParent(i));
+                    i = getParent(i);
+                }
+            }
+        } else {
+            System.out.println("Error: index is greater than heap size");
         }
     }
 
