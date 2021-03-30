@@ -103,6 +103,12 @@ void MinHeap::insertKey(int k)
 // new_val is smaller than harr[i].
 void MinHeap::decreaseKey(int i, int new_val)
 {
+    
+     if(new_val>harr[i]){
+        cout<<"Error: new key is larger than current\n";
+        printHeap();
+        return;
+    }
     cout<<"decreaseKey("<<i<<","<<new_val<<")\n";
     harr[i] = new_val;
     while (i > 1 && harr[parent(i)] > harr[i])
