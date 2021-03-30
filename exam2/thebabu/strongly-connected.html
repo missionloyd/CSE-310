@@ -38,13 +38,13 @@
 		
 		//**MODIFY THIS** (SELF LOOPS ARE NOT DRAWN SO DONT FREAK OUT IF ITS NOT VISIBLE)
 		var THEGRAPH = [
-					{ id: "A", adj: ["C"] },
-					{ id: "B", adj: ["A", "D"] },
-					{ id: "C", adj: ["B"] },
-					{ id: "D", adj: ["C"] },
-					{ id: "E", adj: ["B", "G"] },
-					{ id: "F", adj: ["C", "E", "H"] },
-					{ id: "G", adj: ["H"] },
+					{ id: "A", adj: ["B"] },
+					{ id: "B", adj: ["C", "E", "F"] },
+					{ id: "C", adj: ["D", "G"] },
+					{ id: "D", adj: ["C", "G", "H"] },
+					{ id: "E", adj: ["A", "F"] },
+					{ id: "F", adj: ["G"] },
+					{ id: "G", adj: ["F", "H"] },
 					{ id: "H", adj: ["H"] }
 				];
 		
@@ -96,6 +96,7 @@
 		var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
 		
 		//Algorithms
+		var finished_stack = [];
 		function dfs() {
 					time = 0;
 					var v = sigma.instances(0).graph.nodes();
@@ -118,6 +119,7 @@
 										}
 							}
 					
+					finished_stack.unshift(u.id);
 					u.color = black;
 					time++;
 					u.fin = time;
@@ -129,26 +131,55 @@
 					//Clear adj lists
 					for(i in transposed_graph) {
 								transposed_graph[i].adj = [];
+								transposed_graph[i].color = white;
 							}
 					
 					//Add transposed adj list
 					for(i in input_graph) {
+								
 								for(j in input_graph[i].adj) {
-											transposed_graph.find(x => x.id == input_graph[i].adj[j]).adj.push(input_graph[i].adj[j]);
-										}
+									transposed_graph.find(x => x.id == input_graph[i].adj[j]).adj.unshift(input_graph[i].id);
+								}
 							}
 					
 					return transposed_graph;
 				}
 		
 		var connected_colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF", "#FF00FF"]; //If there is more than 6 strongly connected components just add more colors lmao
+		var color_index = 0;
 		function trajuns() {
 					dfs();
 					var transposed_graph = create_g_transpose(THEGRAPH);
+				
+					//console.log(transposed_graph);
 					
-					console.table(transposed_graph);
-					
+					for(i in finished_stack) {
+						console.log("SCC: " + color_index);
+						
+						if(transposed_graph.find(x => x.id == finished_stack[i]).color == white) {
+							
+							trajuns_helper(finished_stack[i], transposed_graph);
+							color_index++;
+						}
+					}
+			}
+		
+		function trajuns_helper(u_string, g) {
+			var u = g.find(x => x.id == u_string);
+			u.color = gray;
+			
+			//Mark SCC
+			sigma.instances(0).graph.nodes().find(x => x.id == u.id).color = connected_colors[color_index];
+			console.log(u.id);
+			
+			for(i in u.adj) {
+				var v = g.find(x => x.id == u.adj[i]);
+				
+				if(v.color == white) {
+					trajuns_helper(v.id, g);
 				}
+			}
+		}
 		
 		trajuns();
 	</script>
