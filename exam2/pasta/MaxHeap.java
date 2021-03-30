@@ -1,8 +1,10 @@
 public class MaxHeap {
     private int[] A;
     private int size;
+    private int heapifyCalls;
 
     public void buildMaxHeap(int[] arr) {
+        heapifyCalls = 0;
         size = arr.length;
         this.A = new int[size + 1];
 
@@ -12,30 +14,33 @@ public class MaxHeap {
         for (int i = (int) Math.floor(size / 2); i >= 1; i--) {
             maxHeapify(i);
         }
+        System.out.println("\nbuildMaxHeap heapifyCalls:\t---> " + heapifyCalls);
     }
 
-    public void maxHeapify(int index) {
-        int left = getLeft(index);
-        int right = getRight(index);
+    public void maxHeapify(int i) {
+        heapifyCalls++;
+        int left = getLeft(i);
+        int right = getRight(i);
         int largest;
 
-        if (left <= size && A[left] > A[index]) {
+        if (left <= size && A[left] > A[i]) {
             largest = left;
         } else {
-            largest = index;
+            largest = i;
         }
 
         if (right <= size && A[right] > A[largest]) {
             largest = right;
         }
 
-        if (largest != index) {
-            swap(index, largest);
+        if (largest != i) {
+            swap(i, largest);
             maxHeapify(largest);
         }
     }
 
     public void extractMax() {
+        heapifyCalls = 0;
         if (size < 1) {
             System.out.print("Error: heap empty\n");
         } else {
@@ -44,6 +49,7 @@ public class MaxHeap {
             size--;
             maxHeapify(1);
         }
+        System.out.println("extractMax heapifyCalls:\t---> " + heapifyCalls);
     }
 
     public void insert(int key) {
@@ -67,16 +73,19 @@ public class MaxHeap {
         }
     }
 
-    public void heapSort() {
-        buildMaxHeap(A);
-        for (int i = A.length; i >= 2; i--) {
+    public void heapSort(/**int[] A*/) {
+        //buildMaxHeap(A);
+        int temp = size;
+        for (int i = temp; i >= 2; i--) {
             swap(1, i);
             size--;
+            heapifyCalls = 0;
             maxHeapify(1);
         }
+        size = temp;
     }
 
-    public void swap(int a, int b) {
+    private void swap(int a, int b) {
         int temp = A[a];
         A[a] = A[b];
         A[b] = temp;

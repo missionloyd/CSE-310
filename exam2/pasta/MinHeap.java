@@ -1,8 +1,10 @@
 public class MinHeap {
     private int[] A;
     private int size;
+    private int heapifyCalls;
 
     public void buildMinHeap(int[] arr) {
+        heapifyCalls = 0;
         size = arr.length;
         this.A = new int[size + 1];
 
@@ -12,21 +14,23 @@ public class MinHeap {
         for (int i = (int) Math.floor(size / 2); i >= 1; i--) {
             minHeapify(i);
         }
+        System.out.println("\nbuildMinHeap heapifyCalls:\t---> " + heapifyCalls);
     }
 
     public void minHeapify(int i) {
-        int l = getLeft(i);
-        int r = getRight(i);
+        heapifyCalls++;
+        int left = getLeft(i);
+        int right = getRight(i);
         int smallest;
 
-        if (l <= size && A[l] < A[i]) {
-            smallest = l;
+        if (left <= size && A[left] < A[i]) {
+            smallest = left;
         } else {
             smallest = i;
         }
 
-        if (r <= size && A[r] < A[smallest]) {
-            smallest = r;
+        if (right <= size && A[right] < A[smallest]) {
+            smallest = right;
         }
 
         if (smallest != i) {
@@ -36,6 +40,7 @@ public class MinHeap {
     }
 
     public void extractMin() {
+        heapifyCalls = 0;
         if (size < 1) {
             System.out.print("Error: heap empty\n");
         } else {
@@ -44,6 +49,7 @@ public class MinHeap {
             size--;
             minHeapify(1);
         }
+        System.out.println("extractMin heapifyCalls:\t---> " + heapifyCalls);
     }
 
     public void insert(int key) {
@@ -67,16 +73,18 @@ public class MinHeap {
         }
     }
 
-    public void heapSort() {
-        buildMinHeap(A);
-        for (int i = A.length; i >= 2; i--) {
+    public void heapSort(/**int[] A*/) {
+        //buildMinHeap(A);
+        int temp = size;
+        for (int i = size; i >= 2; i--) {
             swap(1, i);
             size--;
             minHeapify(1);
         }
+        size = temp;
     }
 
-    public void swap(int a, int b) {
+    private void swap(int a, int b) {
         int temp = A[a];
         A[a] = A[b];
         A[b] = temp;
@@ -95,7 +103,7 @@ public class MinHeap {
     }
 
     public void printArr() {
-        System.out.print("i:\t");
+        System.out.print("i:\t\t");
         for (int x = 1; x <= size; x++) {
             System.out.print("\t" + x);
         }
