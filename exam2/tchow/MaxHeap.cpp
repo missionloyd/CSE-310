@@ -106,6 +106,11 @@ void MaxHeap::insertKey(int k)
 // new_val is smaller than harr[i].
 void MaxHeap::increaseKey(int i, int new_val)
 {
+ if(new_val<harr[i]){
+        cout<<"Error: new key is smaller than current\n";
+        printHeap();
+        return;
+    }
     cout<<"increaseKey("<<i<<","<<new_val<<")\n";
     harr[i] = new_val;
     while (i > 1 && harr[parent(i)] < harr[i])
