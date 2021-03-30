@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>God help me pt 2</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/sigma.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.renderers.edgeLabels.min.js"></script>
+		<script src="sigma.plugins.dragNodes.js"></script>
+	</head>
+	
+	<body>
+		<p id="sort-p">U CAN SHIFT NODES AROUND</p>
+		<div id="container">
+			<style>
+				#graph-container {
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					position: absolute;
+				}
+			</style>
+			<div id="graph-container"></div>
+		</div>
+	</body>
+	
+	<script>
+		var i,
+			s,
+			N = 5,
+			E = 6,
+			g = { nodes: [], edges: [] };
+		
+		var white = "#eee";
+		var gray  = "#666";
+		var black = "#000";
+		
+		//**MODIFY THIS** (SELF LOOPS ARE NOT DRAWN SO DONT FREAK OUT IF ITS NOT VISIBLE)
+		var THEGRAPH = [
+					{ id: "A", adj: ["C"] },
+					{ id: "B", adj: ["A", "D"] },
+					{ id: "C", adj: ["B"] },
+					{ id: "D", adj: ["C"] },
+					{ id: "E", adj: ["B", "G"] },
+					{ id: "F", adj: ["C", "E", "H"] },
+					{ id: "G", adj: ["H"] },
+					{ id: "H", adj: ["H"] }
+				];
+		
+		//Add nodes and edges
+		var k = 0;
+		for(i = 0; i < THEGRAPH.length; i++) {
+			g.nodes.push({
+				id: THEGRAPH[i].id,
+				label: THEGRAPH[i].id,
+				adj: THEGRAPH[i].adj,
+				x: Math.random(),
+				y: Math.random(),
+				size: 10,
+				color: white,
+				fin: null,
+			});
+			
+			for(j = 0; j < THEGRAPH[i].adj.length; j++) {
+					g.edges.push({
+						id: "E" + k,
+						source: THEGRAPH[i].id,
+						target: THEGRAPH[i].adj[j],
+						size: 10,
+						color: "#ccc",
+						type: 'arrow'
+					});
+					k++;
+				}
+			}
+		
+		// Instantiate sigma:
+		s = new sigma({
+					graph: g,
+					container: 'graph-container',
+					renderer: {
+								container: document.getElementById('graph-container'),
+								type: 'canvas',
+							},
+					settings: {
+								minNodeSize: 8,
+								maxNodeSize: 20,
+								maxEdgeSize: 10,
+								doubleClickEnabled: false,
+								arrowSizeRatio: 5,
+							}
+				});
+		
+		//Listeners
+		var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
+		
+		//Algorithms
+		function dfs() {
+					time = 0;
+					var v = sigma.instances(0).graph.nodes();
+					
+					for(i in v) {
+								if(v[i].color == white) {
+											dfs_visit(v[i]);
+										}
+							}
+				}
+		
+		function dfs_visit(u){
+					time++;
+					u.color = gray;
+					
+					for(i in u.adj) {
+								var v = sigma.instances(0).graph.nodes().find(x => x.id == u.adj[i]);
+								if(v.color == white) {
+											dfs_visit(v);
+										}
+							}
+					
+					u.color = black;
+					time++;
+					u.fin = time;
+				}
+		
+		function create_g_transpose(input_graph) {
+					var transposed_graph = JSON.parse(JSON.stringify(input_graph));
+					
+					//Clear adj lists
+					for(i in transposed_graph) {
+								transposed_graph[i].adj = [];
+							}
+					
+					//Add transposed adj list
+					for(i in input_graph) {
+								for(j in input_graph[i].adj) {
+											transposed_graph.find(x => x.id == input_graph[i].adj[j]).adj.push(input_graph[i].adj[j]);
+										}
+							}
+					
+					return transposed_graph;
+				}
+		
+		var connected_colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF", "#FF00FF"]; //If there is more than 6 strongly connected components just add more colors lmao
+		function trajuns() {
+					dfs();
+					var transposed_graph = create_g_transpose(THEGRAPH);
+					
+					console.table(transposed_graph);
+					
+				}
+		
+		trajuns();
+	</script>
+</html>
