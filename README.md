@@ -1,7 +1,7 @@
 ## Exam2 Algorithms
 - Kawhilites: FindSet, Link, Union, MaxHeap/MinHeap (C++)
 - T.Chow: MaxHeap/MinHeap with heapify calls (C++)
-- Pasta: DisjointSets, Heaps (Driver), MaxHeap, MinHeap (Java)
+- Pasta: DisjointSets, Heaps (Driver), MaxHeap/MinHeap with heapify calls (Java)
 
 ## Exam1 Algorithms
 - InsertionSort, MergeSort, and QuickSort (C++ & Python)
