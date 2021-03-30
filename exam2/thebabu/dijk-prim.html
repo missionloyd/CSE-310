@@ -10,7 +10,7 @@
 	</head>
 	
 	<body>
-		<p id="sort-p">U CAN SHIFT NODES AROUND</p>
+		<p id="sort-p">Bruh coding edges is hard lmao just use this website I found: https://graphonline.ru/en/ it will do MST and Dijikstra's (Full report for dijikstra's)</p>
 		<div id="container">
 			<style>
 				#graph-container {
@@ -36,13 +36,13 @@
 		var gray  = "#666";
 		var black = "#000";
 		
-		//**MODIFY THIS**
+		//**MODIFY THIS** (t is target node and d is the distance from that target node)
 		var THEGRAPH = [
-			{ id: "S", adj: [{t: "T", d: 10}] },
-			{ id: "T", adj: ["C", "E", "F"] },
-			{ id: "X", adj: ["D", "G"] },
-			{ id: "Y", adj: ["C", "G", "H"] },
-			{ id: "Z", adj: ["A", "F"] }
+			{ id: "S", adj: [{t: "T", d: 10}, {t: "Y", d: 5}] },
+			{ id: "T", adj: [{t: "X", d: 1}, {t: "Y", d: 2}] },
+			{ id: "X", adj: [{t: "Z", d: 4}] },
+			{ id: "Y", adj: [{t: "T", d: 3}, {t: "X", d: 9}, {t: "Z", d: 2}] },
+			{ id: "Z", adj: [{t: "S", d: 7}, {t: "X", d: 6}] }
 		];
 		
 		//Add nodes and edges
@@ -56,17 +56,19 @@
 				y: Math.random(),
 				size: 10,
 				color: white,
-				fin: null,
+				d: null,
+				pi: null
 			});
 			
 			for(j = 0; j < THEGRAPH[i].adj.length; j++) {
 					g.edges.push({
 						id: "E" + k,
 						source: THEGRAPH[i].id,
-						target: THEGRAPH[i].adj[j],
+						target: THEGRAPH[i].adj[j].t,
+						label: String(THEGRAPH[i].adj[j].d),
 						size: 10,
 						color: "#ccc",
-						type: 'arrow'
+						type: 'arrow',
 					});
 					k++;
 				}
@@ -93,6 +95,16 @@
 		var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
 		
 		//Algorithms
-		
+function dijkstra() {
+	
+}
+
+function relax() {
+	
+}
+
+//RUN **MODIFY THIS** Uncomment appropiate function
+dijkstra();
+
 	</script>
 </html>
