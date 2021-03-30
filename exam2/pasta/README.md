@@ -1,4 +1,4 @@
-## Tips
+## Tips from Pasta
 For heaps, make sure to use Heaps.java as a main driver
 
 ## Run Java (VSCode)
