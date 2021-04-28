@@ -32,17 +32,20 @@ public class Red_Black_Tree {
             3. to print a single node ---> tree.printNode('g');
             4. to print all nodes ---> tree.printAllNodes('g');
             5. to print tree ---> tree.printTree('g');
+			^ correction tree.printTree(); (Babu modified this code to show ID too)
         */
 
         // write commands here
 
         // tree.insert('p', 12);
 
+		tree.printTree();
         tree.delete(40);
-        tree.printNode('g');
-        tree.printNode('l');
-        tree.printNode('j');
-        tree.printNode('h');
+        //tree.printNode('g');
+        //tree.printNode('l');
+        //tree.printNode('j');
+        //tree.printNode('h');
+		tree.printTree();
 
     }
 }
@@ -585,7 +588,7 @@ class RedBlackTree {
             }
 
             String sColor = root.color == 'R' ? "RED" : "BLACK";
-            System.out.println(root.key + "(" + sColor + ")");
+            System.out.println(root.key + " " + root.id + " (" + sColor + ")"); //Modified to show ids
             printTree(root.left, indent, false);
             printTree(root.right, indent, true);
         }
